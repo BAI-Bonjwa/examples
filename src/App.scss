@@ -12,10 +12,15 @@
 
   ul {
     display: inline-block;
+    font-size: 18px;
 
     li {
       display: inline-block;
-      padding: 10px;
+      padding: 12px;
+
+      a, a:active, a:visited {
+        color: $white;
+      }
     }
   }
 }

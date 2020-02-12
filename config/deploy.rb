@@ -9,10 +9,10 @@ require 'mina/git'
 #   repository   - Git repo to clone from. (needed by mina/git)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
-set :application_name, 'webgl-examples'
+set :application_name, 'examples'
 set :domain, 'baibonjwa.com'
-set :deploy_to, '/var/www/webgl-examples'
-set :repository, 'git@github.com:BAI-Bonjwa/webgl-examples.git'
+set :deploy_to, '/var/www/examples'
+set :repository, 'git@github.com:BAI-Bonjwa/examples.git'
 set :branch, 'master'
 
 # Optional settings:

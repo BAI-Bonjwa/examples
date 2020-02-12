@@ -1,1 +1,1 @@
-[![Build Status](https://travis-ci.com/BAI-Bonjwa/webgl-examples.svg?branch=master)](https://travis-ci.com/BAI-Bonjwa/webgl-examples)
+[![Build Status](https://travis-ci.com/BAI-Bonjwa/examples.svg?branch=master)](https://travis-ci.com/BAI-Bonjwa/examples)

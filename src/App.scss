@@ -1,6 +1,21 @@
 @import "assets/stylesheets/variables";
 @import "assets/stylesheets/base";
 
-.header {
-  font-size: 24px;
+.nav {
+  padding: 12px;
+
+  .header {
+    display: inline-block;
+    font-size: 24px;
+    margin-right: 50px;
+  }
+
+  ul {
+    display: inline-block;
+
+    li {
+      display: inline-block;
+      padding: 10px;
+    }
+  }
 }

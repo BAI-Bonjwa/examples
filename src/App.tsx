@@ -13,7 +13,7 @@ import {
 
 const App = () => {
   return (
-    <Router>
+    <Router basename="/examples/">
       <div className="App">
         <nav className="nav">
           <h1 className="header brightgreen">Examples</h1>

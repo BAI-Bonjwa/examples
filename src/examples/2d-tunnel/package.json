@@ -1,0 +1,25 @@
+{
+  "name": "webgl-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.106.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.0.1",
+    "parcel": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.1.2"
+  },
+  "staticFiles": {
+    "staticPath": "public",
+    "watcherGlob": "**"
+  }
+}

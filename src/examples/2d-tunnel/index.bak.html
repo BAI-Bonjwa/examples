@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+    }
+    /* make the canvas the size of the viewport */
+    canvas {
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas></canvas>
+  <script type="x-shader/x-vertex" id="vertex-shader">
+    #version 100
+
+    void main() {
+      gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
+      gl_PointSize = 34.0;
+    }
+  </script>
+  <script type="x-shader/x-fragment" id="fragment-shader">
+    #version 100
+
+    void main() {
+      gl_FragColor = vec4(0.18, 0.54, 0.34, 1.0);
+    }
+  </script>
+  <script src="./index.js"></script>
+</body>
+ </html>

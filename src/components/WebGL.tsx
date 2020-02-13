@@ -24,6 +24,7 @@ class WebGL extends Component {
   componentDidMount() {
     if (this.canvasRef.current) {
       this.renderer = new THREE.WebGLRenderer({ canvas: this.canvasRef.current });
+      this.renderer.setSize(600, 360);
     } else {
       console.error('Cannot find canvas element');
     }
@@ -32,8 +33,8 @@ class WebGL extends Component {
       time: { value: 1.0 },
       resolution: { value: new THREE.Vector2() },
       iGlobalTime:    { type: 'f', value: 0.1 },
-      iChannel0:  { type: 't', value: new THREE.TextureLoader().load('/webgl/2d-tunnel/1.jpg') },
-      iChannel1:  { type: 't', value: new THREE.TextureLoader().load('/webgl/2d-tunnel/2.jpg') },
+      iChannel0:  { type: 't', value: new THREE.TextureLoader().load(`${process.env.PUBLIC_URL}/webgl/2d-tunnel/1.jpg`) },
+      iChannel1:  { type: 't', value: new THREE.TextureLoader().load(`${process.env.PUBLIC_URL}/webgl/2d-tunnel/2.jpg`) },
     }
 
     uniforms.iChannel0.value.wrapS = uniforms.iChannel0.value.wrapT = THREE.RepeatWrapping;

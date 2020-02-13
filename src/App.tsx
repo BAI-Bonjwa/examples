@@ -13,7 +13,7 @@ import {
 
 const App = () => {
   return (
-    <Router basename="/examples/">
+    <Router basename={process.env.PUBLIC_URL}>
       <div className="App">
         <nav className="nav">
           <h1 className="header brightgreen">Examples</h1>

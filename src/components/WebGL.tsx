@@ -94,7 +94,7 @@ class WebGL extends Component {
   }
 
   componentDidUpdate() {
-    this.highlight()
+    // this.highlight()
   }
 
   highlight = () => {
@@ -107,6 +107,7 @@ class WebGL extends Component {
     return (
       <div className="webgl">
         <div className="column">
+          <h2 className="white">WebGL Example: 2D Tunnel</h2>
           <canvas ref={this.canvasRef}></canvas>
           <div className="playerbar">
             <span>Time: 10s</span>
@@ -115,7 +116,7 @@ class WebGL extends Component {
             &nbsp;&nbsp;
             <span>Size: 640x360</span>
           </div>
-          <h2 className="brightgreen">2D Tunnel</h2>
+          <h2 className="white">Description</h2>
           <p className="white description">
             Simple 2D tunnel with crossfading between two textures
           </p>

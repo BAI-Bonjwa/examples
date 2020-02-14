@@ -1,8 +1,7 @@
-const vs = `
-  varying vec2 vUv;
+import { stripIndent } from 'common-tags';
 
+const vs = stripIndent`
   void main() {
-    vUv = uv;
     gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
   }
 `;

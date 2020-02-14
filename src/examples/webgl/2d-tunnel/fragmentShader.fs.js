@@ -1,16 +1,14 @@
-const fs = `
+import { stripIndent } from 'common-tags';
+
+const fs = stripIndent`
   uniform float iGlobalTime;
   uniform vec2 iResolution;
   uniform sampler2D iChannel0;
   uniform sampler2D iChannel1;
 
-  varying vec2 vUv;
-
   void main(void)
   {
       vec2 p = gl_FragCoord.xy / iResolution.xy;
-      // vec2 p = vec2(gl_FragCoord.x / 600., gl_FragCoord.y / 360.);
-      // vec2 p = -1.0 + 2.0 * vUv;
       vec2 q = p - vec2(0.5, 0.5);
 
       q.x += sin(iGlobalTime* 0.6) * 0.2;

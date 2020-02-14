@@ -1,0 +1,24 @@
+.webgl {
+  display: flex;
+  padding: 0px 10px;
+
+  pre {
+    margin: 10px 0;
+  }
+
+  canvas {
+    // margin-bottom: 20px;
+  }
+
+  .column {
+    padding: 10px 20px;
+  }
+
+  .playerbar {
+    margin-bottom: 20px;
+  }
+
+  .description {
+    margin-top: 20px;
+  }
+}

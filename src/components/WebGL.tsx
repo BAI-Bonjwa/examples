@@ -7,7 +7,7 @@ import fragmentShader from '../examples/webgl/2d-tunnel/fragmentShader.fs';
 
 const hljs = require('highlight.js/lib/highlight');
 const glsl = require('highlight.js/lib/languages/glsl');
-require('highlight.js/styles/hopscotch.css');
+require('highlight.js/styles/codepen-embed.css');
 hljs.registerLanguage('glsl', glsl);
 console.log(hljs);
 
@@ -19,6 +19,7 @@ class WebGL extends Component {
   vertexShaderNodeRef: RefObject<HTMLDivElement>;
   fragmentShaderNodeRef: RefObject<HTMLDivElement>;
   fpsNodeRef: RefObject<HTMLSpanElement>;
+  timeNodeRef: RefObject<HTMLSpanElement>;
 
   constructor(props: any) {
     super(props);
@@ -34,6 +35,7 @@ class WebGL extends Component {
     this.vertexShaderNodeRef = React.createRef();
     this.fragmentShaderNodeRef = React.createRef();
     this.fpsNodeRef = React.createRef();
+    this.timeNodeRef = React.createRef();
     this.renderer = null;
     this.state = {
       fps: 0
@@ -73,11 +75,13 @@ class WebGL extends Component {
     let clock = new THREE.Clock();
     let fps = 0;
     let frameTime = 0;
+    let time = 0;
 
     const animate = () => {
       const delta = clock.getDelta();
       uniforms.iGlobalTime.value += delta;
 
+      time += delta;
       frameTime += (delta - frameTime) / 30;
       fps = 1 / frameTime;
 
@@ -91,6 +95,12 @@ class WebGL extends Component {
       this.fpsNodeRef.current &&
       (this.fpsNodeRef.current.innerHTML = `FPS: ${fps.toFixed(1)}`);
     }, 1000)
+
+    setInterval(() => {
+      this.timeNodeRef &&
+      this.timeNodeRef.current &&
+      (this.timeNodeRef.current.innerHTML = `Time: ${time.toFixed(2)}s`);
+    }, 60)
   }
 
   componentDidUpdate() {
@@ -110,7 +120,7 @@ class WebGL extends Component {
           <h2 className="white">WebGL Example: 2D Tunnel</h2>
           <canvas ref={this.canvasRef}></canvas>
           <div className="playerbar">
-            <span>Time: 10s</span>
+            <span ref={this.timeNodeRef}>Time: 10s</span>
             &nbsp;&nbsp;
             <span ref={this.fpsNodeRef}>FPS: 0</span>
             &nbsp;&nbsp;

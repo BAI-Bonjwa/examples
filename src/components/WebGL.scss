@@ -1,6 +1,13 @@
+@import '../assets/stylesheets/variables';
+
 .webgl {
   display: flex;
   padding: 0px 10px;
+
+  h2 {
+    font-size: 20px;
+    color: $brightgreen;
+  }
 
   pre {
     margin: 10px 0;

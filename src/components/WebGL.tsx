@@ -1,15 +1,12 @@
 import React, { Component, RefObject }  from 'react';
 import './WebGL.scss';
 import * as THREE from 'three';
-
-import vertexShader from '../examples/webgl/2d-tunnel/vertexShader.vs';
-import fragmentShader from '../examples/webgl/2d-tunnel/fragmentShader.fs';
+import * as examples from '../examples/webgl';
 
 const hljs = require('highlight.js/lib/highlight');
 const glsl = require('highlight.js/lib/languages/glsl');
 require('highlight.js/styles/codepen-embed.css');
 hljs.registerLanguage('glsl', glsl);
-console.log(hljs);
 
 class WebGL extends Component {
   scene: THREE.Scene;
@@ -56,7 +53,8 @@ class WebGL extends Component {
       time: { value: 1.0 },
       iResolution: { value: new THREE.Vector2(600, 360) },
       iGlobalTime:    { type: 'f', value: 0.1 },
-      iChannel0:  { type: 't', value: new THREE.TextureLoader().load(`${process.env.PUBLIC_URL}/webgl/2d-tunnel/1.jpg`) },
+      // iChannel0:  { type: 't', value: new THREE.TextureLoader().load(`${process.env.PUBLIC_URL}/webgl/2d-tunnel/1.jpg`) },
+      iChannel0:  { type: 't', value: new THREE.TextureLoader().load(`${process.env.PUBLIC_URL}/webgl/one-tweet-tunnel/1.jpg`) },
       iChannel1:  { type: 't', value: new THREE.TextureLoader().load(`${process.env.PUBLIC_URL}/webgl/2d-tunnel/2.jpg`) },
     }
 
@@ -64,7 +62,9 @@ class WebGL extends Component {
     uniforms.iChannel1.value.wrapS = uniforms.iChannel1.value.wrapT = THREE.RepeatWrapping;
 
     const material = new THREE.ShaderMaterial({
-      uniforms, vertexShader, fragmentShader
+      uniforms,
+      vertexShader: examples.oneTweetTunnel.vertexShader,
+      fragmentShader: examples.oneTweetTunnel.fragmentShader,
     });
 
     var obj = new THREE.Mesh( new THREE.PlaneGeometry(6, 3.6, 1, 1), material);
@@ -136,7 +136,7 @@ class WebGL extends Component {
           <div className="yellow">
             <pre>
               <code className={'glsl'} ref={this.vertexShaderNodeRef}>
-                { vertexShader }
+                { examples.tunnel.vertexShader }
               </code>
             </pre>
           </div>
@@ -144,7 +144,7 @@ class WebGL extends Component {
           <div className="green">
             <pre>
               <code ref={this.fragmentShaderNodeRef}>
-                { fragmentShader }
+                { examples.tunnel.fragmentShader }
               </code>
             </pre>
           </div>

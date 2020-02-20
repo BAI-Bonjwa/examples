@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import WebGL from './components/WebGL';
+import WebGL from './components/webgl/WebGL';
 import CSS from './components/CSS';
 import Games from './components/Games';
 

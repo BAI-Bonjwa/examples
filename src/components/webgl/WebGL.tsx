@@ -1,4 +1,4 @@
-import React, { useRef }  from 'react';
+import React, { useRef, useEffect }  from 'react';
 import './WebGL.scss';
 import * as THREE from 'three';
 import { useQuery, gql } from '@apollo/client';
@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import { uniformsConverter } from '../../examples/webgl/utils';
 
 const examples = require('../../examples/webgl');
-console.log('examples', examples);
 const hljs = require('highlight.js/lib/highlight');
 const glsl = require('highlight.js/lib/languages/glsl');
 require('highlight.js/styles/codepen-embed.css');
@@ -25,6 +24,11 @@ const WebGL = () => {
   const timeNode = useRef<HTMLSpanElement>(null);
   const vertexShaderNode = useRef<HTMLDivElement>(null);
   const fragmentShaderNode = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    vertexShaderNode && vertexShaderNode.current && hljs.highlightBlock(vertexShaderNode.current);
+    fragmentShaderNode && fragmentShaderNode.current && hljs.highlightBlock(fragmentShaderNode.current);
+  })
 
   let { id } = useParams();
   const GET_WEBGL_EXAMPLE_BY_ID = gql`
@@ -98,8 +102,6 @@ const WebGL = () => {
     if (renderer) renderer.setSize(600, 360);
   }
 
-  vertexShaderNode && vertexShaderNode.current && hljs.highlightBlock(vertexShaderNode.current);
-  fragmentShaderNode && fragmentShaderNode.current && hljs.highlightBlock(fragmentShaderNode.current);
 
   var obj = new THREE.Mesh( new THREE.PlaneGeometry(6, 3.6, 1, 1), material);
   scene.add(obj);
@@ -120,6 +122,8 @@ const WebGL = () => {
         </div>
         <h2 className="white">Description</h2>
         <p className="white description">
+          { loading && <span>Loading..</span> }
+          { error && <span>Error..</span> }
           { data && data.webglExample.description }
         </p>
       </div>
@@ -137,9 +141,8 @@ const WebGL = () => {
             <tbody>
               {
                 uniformsOutput && Object.keys(uniformsOutput).map((key) => {
-                  console.log(uniformsOutput[key]);
                   return (
-                    <tr>
+                    <tr key={key}>
                       <td>{key}</td>
                       <td>{uniformsOutput[key].type}</td>
                       <td>{uniformsOutput[key].value}</td>

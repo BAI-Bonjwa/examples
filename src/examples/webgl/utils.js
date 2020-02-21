@@ -2,14 +2,21 @@ const uniformsConverter = (uniforms) => {
   const results = {};
   Object.keys(uniforms).forEach((key) => {
     if (key.startsWith('iChannel')) {
-      // console.log(uniforms[key])
       results[key] = {
-        type: 'Texture',
+        type: 'sampler2D',
         value: uniforms[key].value.image.src,
+      }
+    } else if (key === 'iResolution') {
+      const [x, y] = uniforms[key].value;
+      results[key] = {
+        type: 'vec2',
+        value: `[${x}, ${y}]`
       } 
-      // console.log(uniforms[key].value.image.src)
     } else {
-      results[key] = uniforms[key];
+      results[key] = {
+        ...uniforms[key],
+        type: 'float',
+      }
     }
   });
   return results;

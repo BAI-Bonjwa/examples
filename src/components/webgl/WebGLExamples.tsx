@@ -1,6 +1,7 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { Link } from "react-router-dom";
+import "./WebGLExamples.scss";
 
 const WebGLExamples = () => {
 
@@ -19,19 +20,22 @@ const WebGLExamples = () => {
   const { loading, error, data } = useQuery(GET_WEBGL_EXAMPLES);
 
   return (
-    <div>
+    <div className="webgl-examples">
+      <h1>WebGL Examples</h1>
       { loading && <p>Loading..</p> }
       { error && <p>Error..</p> }
-      { data && data.webglExamples.map(({
-        id, identifier, name
-      } : {
-        id: string, identifier: string,
-        name: string
-      }) => (
-        <p key={id}>
-          <Link to={`/webgl/${id}`}>{name}</Link>
-        </p>
-      ))}
+      <ul>
+        { data && data.webglExamples.map(({
+          id, identifier, name
+        } : {
+          id: string, identifier: string,
+          name: string
+        }) => (
+          <li key={id}>
+            <Link to={`/webgl/${id}`}>{name}</Link>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

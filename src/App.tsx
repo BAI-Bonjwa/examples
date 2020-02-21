@@ -2,8 +2,9 @@ import React from 'react';
 import './App.scss';
 import WebGL from './components/webgl/WebGL';
 import WebGLExamples from './components/webgl/WebGLExamples';
-import CSS from './components/CSS';
-import Games from './components/Games';
+import CSSList from './components/css/CSSList';
+import GameList from './components/games/GameList';
+import Main from './components/Main';
 
 import {
   BrowserRouter as Router,
@@ -17,7 +18,9 @@ const App = () => {
     <Router basename={process.env.PUBLIC_URL}>
       <div className="App">
         <nav className="nav">
-          <h1 className="header brightgreen">Examples</h1>
+          <h1 className="header">
+            <Link to="/">Examples</Link>
+          </h1>
 
           <ul className="links">
             {/* <li><a href="home">Home</a></li> */}
@@ -40,10 +43,13 @@ const App = () => {
           </Route>
           <Route path="/webgl" component={WebGLExamples} />
           <Route path="/css">
-            <CSS />
+            <CSSList />
           </Route>
           <Route path="/games">
-            <Games />
+            <GameList />
+          </Route>
+          <Route path="/">
+            <Main />
           </Route>
         </Switch>
 

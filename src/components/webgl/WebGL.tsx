@@ -111,7 +111,7 @@ const WebGL = () => {
   return(
     <div className="webgl">
       <div className="column">
-        <h2 className="white">WebGL Example: { data && data.webglExample.name }</h2>
+        <h1 className="white">WebGL Example: { data && data.webglExample.name }</h1>
         <canvas ref={canvasNode}></canvas>
         <div className="playerbar">
           <span ref={timeNode}>Time: 10s</span>
@@ -120,7 +120,7 @@ const WebGL = () => {
           &nbsp;&nbsp;
           <span>Size: 640x360</span>
         </div>
-        <h2 className="white">Description</h2>
+        <h1 className="white">Description</h1>
         <p className="white description">
           { loading && <span>Loading..</span> }
           { error && <span>Error..</span> }
@@ -128,7 +128,7 @@ const WebGL = () => {
         </p>
       </div>
       <div className="column">
-        <h2 className="white">Uniforms</h2>
+        <h1 className="white">Uniforms</h1>
         <div className="yellow">
           <table>
             <thead>
@@ -153,7 +153,7 @@ const WebGL = () => {
             </tbody>
           </table>
         </div>
-        <h2 className="white">Vertex Shader</h2>
+        <h1 className="white">Vertex Shader</h1>
         <div className="yellow">
           <pre>
             <code className={'glsl'} ref={vertexShaderNode}>
@@ -161,7 +161,7 @@ const WebGL = () => {
             </code>
           </pre>
         </div>
-        <h2 className="white">Fragment Shader</h2>
+        <h1 className="white">Fragment Shader</h1>
         <div className="green">
           <pre>
             <code ref={fragmentShaderNode}>

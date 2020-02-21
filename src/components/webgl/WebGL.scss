@@ -4,13 +4,22 @@
   display: flex;
   padding: 0px 10px;
 
-  h2 {
+  h1 {
     font-size: 20px;
     color: $brightgreen;
   }
 
   pre, table {
     margin: 10px 0;
+  }
+
+  pre {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
   }
 
   canvas {

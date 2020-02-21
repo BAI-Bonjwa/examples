@@ -1,11 +1,11 @@
-import React, { useEffect, useRef }  from 'react';
+import React, { useRef }  from 'react';
 import './WebGL.scss';
 import * as THREE from 'three';
-import * as examples from '../../examples/webgl';
-
 import { useQuery, gql } from '@apollo/client';
+import { useParams } from "react-router-dom";
 
-
+const examples = require('../../examples/webgl');
+console.log('examples', examples);
 const hljs = require('highlight.js/lib/highlight');
 const glsl = require('highlight.js/lib/languages/glsl');
 require('highlight.js/styles/codepen-embed.css');
@@ -25,19 +25,22 @@ const WebGL = () => {
   const vertexShaderNode = useRef<HTMLDivElement>(null);
   const fragmentShaderNode = useRef<HTMLDivElement>(null);
 
-  const GET_USER_INFO = gql`
-    {
-      users(last: null) {
+  let { id } = useParams();
+  const GET_WEBGL_EXAMPLE_BY_ID = gql`
+    query WebglExample($id: ID!) {
+      webglExample(id: $id) {
         id
+        identifier
         name
-        email
-        createdAt
-        updatedAt
+        description
+        publicPath
       }
     }
   `;
 
-  const { loading, error, data } = useQuery(GET_USER_INFO);
+  const { loading, error, data } = useQuery(
+    GET_WEBGL_EXAMPLE_BY_ID,
+    { variables: { id }});
 
   const uniforms = {
     time: { value: 1.0 },
@@ -48,10 +51,17 @@ const WebGL = () => {
     iChannel1:  { type: 't', value: new THREE.TextureLoader().load(`${process.env.PUBLIC_URL}/webgl/2d-tunnel/2.jpg`) },
   }
 
+  // const example = examples.oneTweetTunnel;
+
+  let example, vertexShader, fragmentShader;
+  if (data) {
+    example = examples[data.webglExample.identifier];
+    vertexShader = example.vertexShader;
+    fragmentShader = example.fragmentShader;
+  }
+
   const material = new THREE.ShaderMaterial({
-    uniforms,
-    vertexShader: examples.oneTweetTunnel.vertexShader,
-    fragmentShader: examples.oneTweetTunnel.fragmentShader,
+    uniforms, vertexShader, fragmentShader,
   });
 
   uniforms.iChannel0.value.wrapS = uniforms.iChannel0.value.wrapT = THREE.RepeatWrapping;
@@ -105,7 +115,7 @@ const WebGL = () => {
   return(
     <div className="webgl">
       <div className="column">
-        <h2 className="white">WebGL Example: 2D Tunnel</h2>
+        <h2 className="white">WebGL Example: { data && data.webglExample.name }</h2>
         <canvas ref={canvasNode}></canvas>
         <div className="playerbar">
           <span ref={timeNode}>Time: 10s</span>
@@ -116,25 +126,15 @@ const WebGL = () => {
         </div>
         <h2 className="white">Description</h2>
         <p className="white description">
-          Simple 2D tunnel with crossfading between two textures
+          { data && data.webglExample.description }
         </p>
-        { loading &&  <p>Loading...</p> }
-        { error &&  <p>Error...</p> }
-        { data && data.users.map(({ id, name } : { id: any, name: any }) => (
-            <div key={id}>
-              <p>
-                {id}: {name}
-              </p>
-            </div>)
-          )
-        }
       </div>
       <div className="column">
         <h2 className="white">Vertex Shader</h2>
         <div className="yellow">
           <pre>
             <code className={'glsl'} ref={vertexShaderNode}>
-              { examples.tunnel.vertexShader }
+              { vertexShader }
             </code>
           </pre>
         </div>
@@ -142,7 +142,7 @@ const WebGL = () => {
         <div className="green">
           <pre>
             <code ref={fragmentShaderNode}>
-              { examples.tunnel.fragmentShader }
+              { fragmentShader }
             </code>
           </pre>
         </div>

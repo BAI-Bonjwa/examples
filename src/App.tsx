@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
 import WebGL from './components/webgl/WebGL';
+import WebGLExamples from './components/webgl/WebGLExamples';
 import CSS from './components/CSS';
 import Games from './components/Games';
 
@@ -34,9 +35,10 @@ const App = () => {
         </nav>
 
         <Switch>
-          <Route path="/webgl">
+          <Route path="/webgl/:id">
             <WebGL />
           </Route>
+          <Route path="/webgl" component={WebGLExamples} />
           <Route path="/css">
             <CSS />
           </Route>

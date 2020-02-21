@@ -35,6 +35,12 @@ const App = () => {
             </li>
           </ul>
 
+          <ul className="end">
+            <li>
+              <a href="https://baibonjwa.com">Home</a>
+            </li>
+          </ul>
+
         </nav>
 
         <Switch>

@@ -12,7 +12,7 @@ const client = new ApolloClient({
     uri: process.env.NODE_ENV === "production"
       ? '/api/graphql' : '/graphql',
   })
-});
+})
 
 ReactDOM.render(
   <ApolloProvider client={client}>

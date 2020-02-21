@@ -3,6 +3,7 @@ import './WebGL.scss';
 import * as THREE from 'three';
 import { useQuery, gql } from '@apollo/client';
 import { useParams } from "react-router-dom";
+import { uniformsConverter } from '../../examples/webgl/utils';
 
 const examples = require('../../examples/webgl');
 console.log('examples', examples);
@@ -42,44 +43,37 @@ const WebGL = () => {
     GET_WEBGL_EXAMPLE_BY_ID,
     { variables: { id }});
 
-  const uniforms = {
-    time: { value: 1.0 },
-    iResolution: { value: new THREE.Vector2(600, 360) },
-    iGlobalTime:    { type: 'f', value: 0.1 },
-    // iChannel0:  { type: 't', value: new THREE.TextureLoader().load(`${process.env.PUBLIC_URL}/webgl/2d-tunnel/1.jpg`) },
-    iChannel0:  { type: 't', value: new THREE.TextureLoader().load(`${process.env.PUBLIC_URL}/webgl/one-tweet-tunnel/1.jpg`) },
-    iChannel1:  { type: 't', value: new THREE.TextureLoader().load(`${process.env.PUBLIC_URL}/webgl/2d-tunnel/2.jpg`) },
-  }
-
-  // const example = examples.oneTweetTunnel;
-
+  let uniforms : any;
+  let uniformsOutput : any;
   let example, vertexShader, fragmentShader;
+  let material;
   if (data) {
     example = examples[data.webglExample.identifier];
     vertexShader = example.vertexShader;
     fragmentShader = example.fragmentShader;
+    uniforms = example.uniforms;
+    uniformsOutput = uniformsConverter(uniforms);
+    material = new THREE.ShaderMaterial({
+      uniforms, vertexShader, fragmentShader,
+    });
   }
-
-  const material = new THREE.ShaderMaterial({
-    uniforms, vertexShader, fragmentShader,
-  });
-
-  uniforms.iChannel0.value.wrapS = uniforms.iChannel0.value.wrapT = THREE.RepeatWrapping;
-  uniforms.iChannel1.value.wrapS = uniforms.iChannel1.value.wrapT = THREE.RepeatWrapping;
-
 
   let renderer: THREE.WebGLRenderer;
   let clock = new THREE.Clock();
   let fps = 0;
   let frameTime = 0;
   let time = 0;
+
   const animate = () => {
     const delta = clock.getDelta();
-    uniforms.iGlobalTime.value += delta;
 
     time += delta;
     frameTime += (delta - frameTime) / 30;
     fps = 1 / frameTime;
+
+    if (uniforms) {
+      uniforms.iGlobalTime.value = time;
+    }
 
     if (renderer) renderer.render(scene, camera);
     requestAnimationFrame( animate );
@@ -130,6 +124,32 @@ const WebGL = () => {
         </p>
       </div>
       <div className="column">
+        <h2 className="white">Uniforms</h2>
+        <div className="yellow">
+          <table>
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                uniformsOutput && Object.keys(uniformsOutput).map((key) => {
+                  console.log(uniformsOutput[key]);
+                  return (
+                    <tr>
+                      <td>{key}</td>
+                      <td>{uniformsOutput[key].type}</td>
+                      <td>{uniformsOutput[key].value}</td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
+        </div>
         <h2 className="white">Vertex Shader</h2>
         <div className="yellow">
           <pre>
